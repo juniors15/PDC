@@ -1,6 +1,13 @@
 
 
-f=9000;
+f=6000;
 Fs = 4800;
-temp =cos(2*pi*f/Fs*(1:20000));
-soundsc(temp,Fs);
+temp =cos(2*pi*f/Fs*(1:10000));
+
+%pause;
+
+f2=7000;
+temp2 =cos(2*pi*f2/Fs*(1:10000));
+
+tempstot = [temp,zeros(1,2000),temp2];
+soundsc(tempstot,Fs,16);
