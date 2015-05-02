@@ -9,4 +9,16 @@ freq6 = 9000;
 freq7 = 10000;
 freq8 = 11000;
 
+
+
+freqStart = 2000;
+
+freqEnd = 3000;
+
+tStartEnd = 15000;
+
+tPause = 1000;
+
+tBip = 2000;
+
 Fs = 4800;
