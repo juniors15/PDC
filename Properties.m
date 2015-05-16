@@ -1,5 +1,5 @@
 
-
+Fs = 48000;
 freq1 = 4000;
 freq2 = 5000;
 freq3 = 6000;
@@ -15,10 +15,9 @@ freqStart = 2000;
 
 freqEnd = 3000;
 
-tStartEnd = 15000;
+tStartEnd = 80000;
 
-tPause = 1000;
+tPause = 0;
 
-tBip = 2000;
+tBip = 0.271*Fs;
 
-Fs = 48000;

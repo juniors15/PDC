@@ -16,37 +16,46 @@ plot(in);
 
 %on peut filtrer maintenant
 
-soundStart(1:tStartEnd)=sin(2*pi*freqStart/Fs*(tStartEnd:-1:1));
-soundEnd(1:tStartEnd)=sin(2*pi*freqEnd/Fs*(tStartEnd:-1:1));
+soundStart(1:tStartEnd)=sin(2*pi*freqStart*((1:tStartEnd)/Fs));
+soundEnd(1:tStartEnd)=sin(2*pi*freqEnd*((1:tStartEnd)/Fs));
+sizeIn = size(in)
 
-convStart = conv(in, soundStart);
-convEnd = conv(in, soundEnd);
+
+convStart = conv(in(1:round(sizeIn(1)/4)),soundStart);
+convEnd = conv(in(round(sizeIn(1)*3/4):sizeIn(1)), soundEnd);
 
 [xS,yS] = max(convStart);
 [xE,yE] = max(convEnd);
-
-Sampling = (yE-yS-tStartEnd)/((tBip+tPause)*Fs);
+yS
+yE
+Sampling = ((yE+round(sizeIn(1)*3/4)-yS)-tStartEnd)/(tBip+tPause);
 
 Sampling=round(Sampling);
-
-u=Sampling*(tBip+tPause)*Fs;
+disp('Sampling...');
+u=Sampling*(tBip+tPause);
 
 k=zeros(u,1);
-k(1:u,1)=h((yS+1):(u+yS),1);
+k(1:u,1)=in((yS+1):(u+yS),1);
 
-T*Fs
 
-P=zeros(n,((tBip+tPause)*Fs));
-for i=1:n
-    P(i,1:(tBip+tPause)*Fs)=k((1+(i-1)*(tBip+tPause)*Fs):(i*(tBip+tPause)*Fs),1);
+
+
+P=zeros(Sampling,((tBip+tPause)));
+Sampling
+for i=1:Sampling
+    P(i,1:(tBip+tPause))=k((1+(i-1)*(tBip+tPause)):(i*(tBip+tPause)),1);
 end
 m=size(P);
+m
 jans=zeros(m(1),1);
 for i=1:m(1)
-    jans(i)=decode(P(i,:),Fs);
+    jans(i)=Decode(P(i,:),Fs);
+end
 clear myRecorder
-G=jans';
-end;
+outp=jans';
+outp
+out = Freq2Bin(outp);
+end
 
 
 
